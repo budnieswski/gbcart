@@ -1,0 +1,42 @@
+-- Repalce {WPPREFIX} to wordpress db prefix
+CREATE TABLE {WPPREFIX}gbc_clients (
+  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NULL,
+  email VARCHAR(128) NULL,
+  phone VARCHAR(40) NULL,
+  cellphone VARCHAR(40) NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE {WPPREFIX}gbc_itens (
+  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  wp_id INTEGER UNSIGNED NULL,
+  name VARCHAR(255) NULL,
+  reference VARCHAR(128) NULL,
+  amout INTEGER UNSIGNED NULL,
+  available BOOL NOT NULL DEFAULT true,
+  price DECIMAL NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE {WPPREFIX}gbc_orders (
+  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  client_id INTEGER UNSIGNED NOT NULL,
+  date_created TIMESTAMP NOT NULL,
+  date_finished TIMESTAMP NULL,
+  status VARCHAR(32) NULL,
+  PRIMARY KEY(id),
+  INDEX gbc_orders_FKIndex1(client_id)
+);
+
+CREATE TABLE {WPPREFIX}gbc_order_itens (
+  id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  item_id INTEGER UNSIGNED NOT NULL,
+  order_id INTEGER UNSIGNED NOT NULL,
+  amount INTEGER UNSIGNED NULL DEFAULT 1,
+  PRIMARY KEY(id),
+  INDEX gbc_order_itens_FKIndex1(order_id),
+  INDEX gbc_order_itens_FKIndex2(item_id)
+);
+
+
